@@ -35,8 +35,20 @@ jobs:
       - name: Preserve test signing identity between builds
         uses: actions/cache@v4
         with:
-          path: ~/.android/debug.keystore
+          path: ~/.guardbridge/guardbridge.jks
           key: guardbridge-test-signing-v1
+      - name: Create test signing key if missing
+        run: |
+          mkdir -p "$HOME/.guardbridge"
+          if [ ! -f "$HOME/.guardbridge/guardbridge.jks" ]; then
+            keytool -genkeypair -keystore "$HOME/.guardbridge/guardbridge.jks" -alias guardbridge -storepass android -keypass android -keyalg RSA -keysize 4096 -validity 10000 -dname "CN=GuardBridge Test"
+          fi
+          cat > signing.properties <<EOF
+          KEYSTORE_FILE=$HOME/.guardbridge/guardbridge.jks
+          KEYSTORE_PASSWORD=android
+          KEYSTORE_ALIAS=guardbridge
+          KEYSTORE_ALIAS_PASSWORD=android
+          EOF
       - uses: gradle/actions/setup-gradle@v4
       - name: Build APK
         run: |
