@@ -1,0 +1,47 @@
+name: GuardBridge APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify foreground timer
+        run: |
+          mkdir -p /tmp/guardbridge-tests
+          javac -d /tmp/guardbridge-tests server/src/main/java/rikka/shizuku/server/ForegroundGate.java tests/ForegroundGateTest.java
+          java -cp /tmp/guardbridge-tests ForegroundGateTest
+      - uses: android-actions/setup-android@v3
+      - name: Install Android build tools
+        run: sdkmanager --channel=3 'platforms;android-36' 'build-tools;36.0.0' 'ndk;29.0.13113456' 'cmake;3.31.6'
+      - name: Preserve test signing identity between builds
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: guardbridge-test-signing-v1
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build APK
+        run: |
+          chmod +x gradlew
+          ./gradlew :manager:assembleRelease --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GuardBridge-APK
+          path: manager/build/outputs/apk/release/guardbridge-release.apk
+          if-no-files-found: error
+          retention-days: 30

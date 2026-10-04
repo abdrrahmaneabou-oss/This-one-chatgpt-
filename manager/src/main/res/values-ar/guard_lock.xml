@@ -1,0 +1,11 @@
+<resources>
+    <string name="guard_lock">قفل</string>
+    <string name="guard_locked_hint">الصلاحيات مقفلة. أبقِ GuardBridge ظاهرًا لمدة 60 ثانية متواصلة لفتح التعديل.</string>
+    <string name="guard_unlocked">تم فتح تعديل الصلاحيات. اضغط قفل بعد إنهاء التعديلات.</string>
+    <string name="guard_locked_hidden">تم قفل الصلاحيات وإخفاء خيارات المطور.</string>
+    <string name="guard_locked_hide_failed">تم قفل الصلاحيات، لكن تعذر إخفاء خيارات المطور.</string>
+    <string name="guard_lock_failed">تعذر القفل: %1$s</string>
+    <string name="guard_countdown">مقفل · يفتح بعد %1$d ثانية · المغادرة تعيد المؤقت</string>
+    <string name="guard_editable">التعديل متاح · اضغط قفل عند الانتهاء</string>
+    <string name="guard_service_offline">شغّل الخدمة لإدارة الصلاحيات</string>
+</resources>

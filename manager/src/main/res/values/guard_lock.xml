@@ -1,0 +1,11 @@
+<resources>
+    <string name="guard_lock">Lock</string>
+    <string name="guard_locked_hint">Permissions locked. Keep GuardBridge visible for 60 uninterrupted seconds to edit.</string>
+    <string name="guard_unlocked">Permission editing unlocked. Press Lock after making your changes.</string>
+    <string name="guard_locked_hidden">Permissions locked. Developer options hidden.</string>
+    <string name="guard_locked_hide_failed">Permissions locked, but hiding Developer options failed.</string>
+    <string name="guard_lock_failed">Could not lock: %1$s</string>
+    <string name="guard_countdown">Locked · unlock in %1$d seconds · leaving resets the timer</string>
+    <string name="guard_editable">Editing enabled · press Lock when finished</string>
+    <string name="guard_service_offline">Start the service to manage permissions</string>
+</resources>
